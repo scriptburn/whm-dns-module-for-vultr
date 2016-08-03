@@ -10,12 +10,12 @@ You just need the vultr.com's API key
 
 ## Install Instruction
 
-** 1** Copy files to any folder on your server;
-** 2** Then chown -R root:root /folder/where/you/copied/files;
-** 3** chmod -R 755 /folder/where/you/copied/files;
-** 4** cd /folder/where/you/copied/files;
-** 5** open config.php and put your vultr.com API key where it says 'enter your api key here'
-** 6** ./install.sh;
+**1** Copy files to any folder on your server;
+**2** Then chown -R root:root /folder/where/you/copied/files;
+**3** chmod -R 755 /folder/where/you/copied/files;
+**4** cd /folder/where/you/copied/files;
+**5** open config.php and put your vultr.com API key where it says 'enter your api key here'
+**6** ./install.sh;
 
 That is all 
 
