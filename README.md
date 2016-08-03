@@ -25,6 +25,6 @@ You just need the vultr.com's API key
 
 That is all
 
-Now you can test if script is working correctly by creating a domain and then login to your vultr.com account and go to DNS section you will see the DNS entries of your Domain.
+Now you can test if script is working correctly by creating a domain from WHM and then login to your vultr.com account and go to DNS section you will see the DNS entries of your Domain.
 
 Now if you do not see DNS entries you can open init.php and set SCB_DEBUG to 1 and then start again and check error_log
