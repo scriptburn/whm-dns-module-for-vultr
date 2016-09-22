@@ -4,7 +4,7 @@
 define('SCB_VERSION', "1.0.0");
 
 // are we in debug mode?
-define('SCB_DEBUG', 0);
+define('SCB_DEBUG', 1);
 
 define('SCB_CPANEL_PATH', '/usr/local/cpanel');
 
