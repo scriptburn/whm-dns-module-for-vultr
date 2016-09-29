@@ -161,6 +161,7 @@ function scb_get_config($key, $default = null)
 
 function install($return = false)
 {
+
     try
     {
         $ret = uninstall(false, true);
@@ -288,6 +289,7 @@ function uninstall($to_remove = false, $return = false)
 {
     try
     {
+
         if ($to_remove)
         {
 
@@ -295,8 +297,7 @@ function uninstall($to_remove = false, $return = false)
         }
         else
         {
-            $items = @file_get_contents(SCB_BASE . "/.tmp");
-
+            $items = file_get_contents(SCB_BASE . "/.tmp");
             $items = @unserialize($items);
         }
 
@@ -316,11 +317,12 @@ function uninstall($to_remove = false, $return = false)
         }
         $failed = [];
         $passed = [];
+
+        $new_items = array();
         foreach ($items as $index => $item)
         {
 
             $item_ret = make_item($item, 'delete');
-            //print_r($item);
             if ($item_ret)
             {
                 //scb_log($item_ret['cmd']);
@@ -328,6 +330,8 @@ function uninstall($to_remove = false, $return = false)
 
                 if (!$ret[0])
                 {
+                    $new_items[$index] = $items[$index];
+
                     $failed[] = [$item_ret['class'], $ret[1]];
                 }
                 else
@@ -336,6 +340,7 @@ function uninstall($to_remove = false, $return = false)
                     $items[$index]['hook']      = $item_ret['hook'];
                     $items[$index]['cmd']       = $item_ret['cmd'];
                     $items[$index]['auto_file'] = $item_ret['auto_file'];
+
                     if ($item_ret['auto_file'] && file_exists($item_ret['hook']))
                     {
                         @unlink($item_ret['hook']);
@@ -343,6 +348,7 @@ function uninstall($to_remove = false, $return = false)
                 }
             }
         }
+        file_put_contents(SCB_BASE . "/.tmp", serialize($new_items));
         $err = '';
         if (count($failed))
         {
@@ -577,18 +583,19 @@ function scb_run($options, $input = null)
         if (isset($options['install']))
         {
             // Get the  array of hooks which we need to register with WHM
-            $items = install();
+            $items = install(isset($options['return']) && $options['return'] ? true : false);
         }
         elseif (isset($options['uninstall']) || isset($options['remove']))
         {
             // Get the  array of hooks which we previously registred inside WHM
-            $items = uninstall();
+            $items = uninstall(false, isset($options['return']) && $options['return'] ? true : false);
 
         }
 
         // when registering or unregistering a hook inside WHM, It expects Json encoded array of hooks from STDOUT
         // which WHM will use to register or unregister hooks
-        echo json_encode($items);
+
+        echo json_encode(@$items[2]);
         exit();
     }
     else
