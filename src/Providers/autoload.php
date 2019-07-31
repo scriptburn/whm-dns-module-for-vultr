@@ -1,4 +1,5 @@
 <?php
+include_once "test.php";
 include_once "base.php";
 
 function scb_execute($mod, $action, $params)
